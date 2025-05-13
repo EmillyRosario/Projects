@@ -1,0 +1,96 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+
+const quizData = [
+  {
+    question: "Qual é a capital da França?",
+    options: ["Paris", "Londres", "Berlim", "Roma"],
+    answer: "Paris",
+  },
+  {
+    question: "Quanto é 5 + 7?",
+    options: ["10", "11", "12", "13"],
+    answer: "12",
+  },
+  {
+    question: "Qual planeta é conhecido como o Planeta Vermelho?",
+    options: ["Terra", "Marte", "Júpiter", "Saturno"],
+    answer: "Marte",
+  },
+];
+
+export default function QuizInterativo() {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+
+  const handleAnswer = (option: string) => {
+    if (option === quizData[currentQuestion].answer) {
+      setScore(score + 1);
+    }
+    const next = currentQuestion + 1;
+    if (next < quizData.length) {
+      setCurrentQuestion(next);
+    } else {
+      setShowResult(true);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-300 to-purple-400 flex items-center justify-center p-4">
+      <Card className="w-full max-w-xl p-6 rounded-2xl shadow-2xl bg-white">
+        <CardContent>
+          {!showResult ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="space-y-4"
+            >
+              <h2 className="text-2xl font-bold text-gray-800">
+                {quizData[currentQuestion].question}
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {quizData[currentQuestion].options.map((option) => (
+                  <Button
+                    key={option}
+                    onClick={() => handleAnswer(option)}
+                    className="text-lg p-4 rounded-2xl shadow-md hover:bg-indigo-100 transition"
+                  >
+                    {option}
+                  </Button>
+                ))}
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <h2 className="text-3xl font-bold text-purple-700 mb-4">
+                Resultado do Quiz
+              </h2>
+              <p className="text-xl text-gray-700">
+                Você acertou {score} de {quizData.length} perguntas!
+              </p>
+              <Button
+                className="mt-6 bg-indigo-500 text-white hover:bg-indigo-600"
+                onClick={() => {
+                  setCurrentQuestion(0);
+                  setScore(0);
+                  setShowResult(false);
+                }}
+              >
+                Tentar novamente
+              </Button>
+            </motion.div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
