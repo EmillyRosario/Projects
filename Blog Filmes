@@ -1,0 +1,130 @@
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { Star } from "lucide-react";
+import {
+  Select,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+} from "@/components/ui/select";
+
+const movies = [
+  {
+    title: "Duna: Parte Dois",
+    description:
+      "Paul Atreides se une aos Fremen para vingar sua família e impedir o futuro sombrio que ele prevê.",
+    image: "https://image.tmdb.org/t/p/w500/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg",
+    rating: 4.5,
+    category: "Ficção Científica",
+  },
+  {
+    title: "Oppenheimer",
+    description:
+      "A história do físico J. Robert Oppenheimer e seu papel no Projeto Manhattan.",
+    image: "https://image.tmdb.org/t/p/w500/fkxxUUR5PcgG6i6U8zBvJc1EyHn.jpg",
+    rating: 4.8,
+    category: "Biografia",
+  },
+  {
+    title: "Barbie",
+    description:
+      "Barbie embarca em uma jornada de autodescoberta no mundo real.",
+    image: "https://image.tmdb.org/t/p/w500/ctMserH8g2SeOAnCw5gFjdQF8mo.jpg",
+    rating: 4.1,
+    category: "Comédia",
+  },
+];
+
+const categories = ["Todos", ...new Set(movies.map((m) => m.category))];
+
+export default function App() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
+
+  const filteredMovies = movies.filter((movie) => {
+    const matchesSearch = movie.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "Todos" || movie.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-100 p-6">
+      <h1 className="text-4xl font-bold text-center mb-6 text-purple-800">
+        🎬 Blog de Filmes
+      </h1>
+
+      <div className="max-w-4xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Input
+          placeholder="Buscar filmes..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full"
+        />
+        <Select onValueChange={setSelectedCategory} defaultValue="Todos">
+          <SelectTrigger>
+            <SelectValue placeholder="Categoria" />
+          </SelectTrigger>
+          <SelectContent>
+            {categories.map((category, i) => (
+              <SelectItem key={i} value={category}>
+                {category}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Button onClick={() => setSearchTerm("")}>Limpar</Button>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {filteredMovies.map((movie, idx) => (
+          <motion.div
+            key={idx}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            className="cursor-pointer"
+          >
+            <Card className="rounded-2xl shadow-lg overflow-hidden">
+              <img
+                src={movie.image}
+                alt={movie.title}
+                className="w-full h-60 object-cover"
+              />
+              <CardContent className="p-4">
+                <h2 className="text-xl font-semibold text-purple-700">
+                  {movie.title}
+                </h2>
+                <p className="text-sm text-gray-700 mt-2">
+                  {movie.description}
+                </p>
+                <p className="text-xs mt-1 text-purple-500">Categoria: {movie.category}</p>
+                <div className="flex items-center gap-1 text-yellow-500 mt-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      fill={i < Math.round(movie.rating) ? "currentColor" : "none"}
+                      className="w-4 h-4"
+                    />
+                  ))}
+                  <span className="text-xs text-gray-500 ml-2">
+                    {movie.rating.toFixed(1)} / 5
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+
+      {filteredMovies.length === 0 && (
+        <p className="text-center text-gray-600 mt-12 text-lg">
+          Nenhum filme encontrado.
+        </p>
+      )}
+    </div>
+  );
+}
