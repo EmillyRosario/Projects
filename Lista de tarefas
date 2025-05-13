@@ -1,0 +1,85 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { CheckCircle, Trash2 } from "lucide-react";
+
+export default function TodoList() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState("");
+
+  const addTask = () => {
+    if (newTask.trim() === "") return;
+    setTasks([...tasks, { text: newTask, done: false }]);
+    setNewTask("");
+  };
+
+  const toggleDone = (index) => {
+    const updated = [...tasks];
+    updated[index].done = !updated[index].done;
+    setTasks(updated);
+  };
+
+  const deleteTask = (index) => {
+    const updated = tasks.filter((_, i) => i !== index);
+    setTasks(updated);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100 p-6">
+      <div className="max-w-xl mx-auto">
+        <h1 className="text-4xl font-bold text-center mb-6 text-purple-700 drop-shadow-sm">
+          Lista de Tarefas ✨
+        </h1>
+        <div className="flex gap-2 mb-6">
+          <Input
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+            placeholder="Digite uma nova tarefa..."
+            className="bg-white/70 backdrop-blur-sm"
+          />
+          <Button onClick={addTask} className="bg-purple-500 hover:bg-purple-600 text-white">
+            Adicionar
+          </Button>
+        </div>
+        <div className="space-y-3">
+          {tasks.map((task, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="flex justify-between items-center p-4 bg-white/70 backdrop-blur-sm shadow-md rounded-2xl">
+                <div
+                  className={`flex-1 text-lg ${task.done ? "line-through text-gray-400" : "text-gray-800"}`}
+                >
+                  {task.text}
+                </div>
+                <div className="flex gap-2 items-center">
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => toggleDone(index)}
+                    className="text-green-600 hover:text-green-800"
+                  >
+                    <CheckCircle />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => deleteTask(index)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <Trash2 />
+                  </Button>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
