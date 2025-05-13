@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entre Páginas - Blog Literário</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #fdfaf6;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #6d4c41;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      background-color: #a1887f;
+      display: flex;
+      justify-content: center;
+      padding: 0.5rem;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    article {
+      margin-bottom: 3rem;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 2rem;
+    }
+    h2 {
+      color: #4e342e;
+    }
+    footer {
+      background-color: #6d4c41;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+    .quote {
+      font-style: italic;
+      background: #eee;
+      padding: 1rem;
+      border-left: 5px solid #6d4c41;
+      margin: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Entre Páginas</h1>
+    <p>Descubra histórias, explore mundos, viva leituras.</p>
+  </header>
+
+  <nav>
+    <a href="#resenhas">Resenhas</a>
+    <a href="#clube">Clube do Livro</a>
+    <a href="#reflexoes">Reflexões</a>
+    <a href="#novidades">Novidades</a>
+  </nav>
+
+  <main>
+    <article id="resenhas">
+      <h2>Resenha: A Biblioteca da Meia-Noite - Matt Haig</h2>
+      <p><strong>Nota:</strong> ⭐⭐⭐⭐☆</p>
+      <p>Uma história envolvente sobre escolhas, arrependimentos e segundas chances. A escrita é fluida e filosófica. Ideal para quem gosta de realismo mágico com um toque existencial.</p>
+    </article>
+
+    <article id="clube">
+      <h2>📚 Clube do Livro - Maio 2025</h2>
+      <p><strong>Livro do mês:</strong> "Pachinko" de Min Jin Lee</p>
+      <p>Vamos dividir a leitura em 4 partes, com encontros virtuais todos os domingos às 18h no Discord.</p>
+    </article>
+
+    <article id="reflexoes">
+      <h2>Reflexão: A importância da leitura na infância</h2>
+      <div class="quote">
+        "Ler para uma criança é plantar uma biblioteca inteira em sua mente."
+      </div>
+      <p>Investir em livros e momentos de leitura desde cedo estimula a empatia, a criatividade e o pensamento crítico.</p>
+    </article>
+
+    <article id="novidades">
+      <h2>Novidades Literárias</h2>
+      <ul>
+        <li>📖 Lançamento: "O Império dos Vampiros" de Jay Kristoff chega ao Brasil em junho.</li>
+        <li>🎬 Adaptação: "A Paciente Silenciosa" será transformado em filme com direção de Ridley Scott.</li>
+      </ul>
+    </article>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Entre Páginas | Feito com ❤️ para leitores apaixonados</p>
+  </footer>
+</body>
+</html>
