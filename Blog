@@ -23,12 +23,23 @@
       display: flex;
       justify-content: center;
       padding: 0.5rem;
+      flex-wrap: wrap;
     }
     nav a {
       color: white;
       margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
+    }
+    #search-bar {
+      padding: 0.5rem;
+      margin: 1rem auto;
+      max-width: 400px;
+      display: block;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
     main {
       max-width: 900px;
@@ -68,26 +79,29 @@
   </header>
 
   <nav>
-    <a href="#resenhas">Resenhas</a>
-    <a href="#clube">Clube do Livro</a>
-    <a href="#reflexoes">Reflexões</a>
-    <a href="#novidades">Novidades</a>
+    <a onclick="filterCategory('all')">Todos</a>
+    <a onclick="filterCategory('resenhas')">Resenhas</a>
+    <a onclick="filterCategory('clube')">Clube do Livro</a>
+    <a onclick="filterCategory('reflexoes')">Reflexões</a>
+    <a onclick="filterCategory('novidades')">Novidades</a>
   </nav>
 
+  <input type="text" id="search-bar" placeholder="Buscar no blog..." oninput="searchPosts()">
+
   <main>
-    <article id="resenhas">
+    <article id="resenhas" data-category="resenhas">
       <h2>Resenha: A Biblioteca da Meia-Noite - Matt Haig</h2>
       <p><strong>Nota:</strong> ⭐⭐⭐⭐☆</p>
       <p>Uma história envolvente sobre escolhas, arrependimentos e segundas chances. A escrita é fluida e filosófica. Ideal para quem gosta de realismo mágico com um toque existencial.</p>
     </article>
 
-    <article id="clube">
+    <article id="clube" data-category="clube">
       <h2>📚 Clube do Livro - Maio 2025</h2>
       <p><strong>Livro do mês:</strong> "Pachinko" de Min Jin Lee</p>
       <p>Vamos dividir a leitura em 4 partes, com encontros virtuais todos os domingos às 18h no Discord.</p>
     </article>
 
-    <article id="reflexoes">
+    <article id="reflexoes" data-category="reflexoes">
       <h2>Reflexão: A importância da leitura na infância</h2>
       <div class="quote">
         "Ler para uma criança é plantar uma biblioteca inteira em sua mente."
@@ -95,7 +109,7 @@
       <p>Investir em livros e momentos de leitura desde cedo estimula a empatia, a criatividade e o pensamento crítico.</p>
     </article>
 
-    <article id="novidades">
+    <article id="novidades" data-category="novidades">
       <h2>Novidades Literárias</h2>
       <ul>
         <li>📖 Lançamento: "O Império dos Vampiros" de Jay Kristoff chega ao Brasil em junho.</li>
@@ -107,5 +121,27 @@
   <footer>
     <p>&copy; 2025 Entre Páginas | Feito com ❤️ para leitores apaixonados</p>
   </footer>
+
+  <script>
+    function searchPosts() {
+      const input = document.getElementById("search-bar").value.toLowerCase();
+      const articles = document.querySelectorAll("main article");
+
+      articles.forEach(article => {
+        const text = article.textContent.toLowerCase();
+        article.style.display = text.includes(input) ? "block" : "none";
+      });
+    }
+
+    function filterCategory(category) {
+      const articles = document.querySelectorAll("main article");
+      articles.forEach(article => {
+        const cat = article.getAttribute("data-category");
+        article.style.display = (category === 'all' || cat === category) ? "block" : "none";
+      });
+      document.getElementById("search-bar").value = "";
+    }
+  </script>
 </body>
 </html>
+
