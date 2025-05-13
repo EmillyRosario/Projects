@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Literário</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+    }
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question h3 {
+      margin-bottom: 10px;
+    }
+    .answers label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 30px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #result {
+      text-align: center;
+      font-size: 20px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    <h1>Quiz Literário 📚</h1>
+    <form id="quizForm">
+      <!-- Perguntas -->
+    </form>
+    <button onclick="verificarRespostas()">Enviar Respostas</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const perguntas = [
+      {
+        pergunta: "1. Qual é o nome do autor de Dom Quixote?",
+        respostas: ["Gabriel García Márquez", "Miguel de Cervantes", "Fernando Pessoa", "William Shakespeare"],
+        correta: 1
+      },
+      {
+        pergunta: "2. Qual personagem vive em um armário sob a escada no início da história?",
+        respostas: ["Frodo Baggins", "Harry Potter", "Percy Jackson", "Greg Heffley"],
+        correta: 1
+      },
+      {
+        pergunta: "3. Em que livro encontramos o famoso começo: 'Todas as famílias felizes se parecem...'?",
+        respostas: ["Madame Bovary", "Anna Kariênina", "Orgulho e Preconceito", "O Morro dos Ventos Uivantes"],
+        correta: 1
+      },
+      {
+        pergunta: "4. Qual dessas obras NÃO foi escrita por George Orwell?",
+        respostas: ["1984", "A Revolução dos Bichos", "Admirável Mundo Novo", "Lutando na Espanha"],
+        correta: 2
+      },
+      {
+        pergunta: "5. Quem é o autor brasileiro de Grande Sertão: Veredas?",
+        respostas: ["Jorge Amado", "Clarice Lispector", "Guimarães Rosa", "Machado de Assis"],
+        correta: 2
+      },
+      {
+        pergunta: "6. Quantos livros compõem As Crônicas de Nárnia?",
+        respostas: ["3", "5", "7", "9"],
+        correta: 2
+      },
+      {
+        pergunta: "7. Qual livro vendeu mais cópias na história (excluindo textos religiosos)?",
+        respostas: ["O Senhor dos Anéis", "O Pequeno Príncipe", "O Código Da Vinci", "Dom Quixote"],
+        correta: 3
+      },
+      {
+        pergunta: "8. Que escritora inglesa é famosa por seus romances como Emma e Razão e Sensibilidade?",
+        respostas: ["Emily Brontë", "Mary Shelley", "Jane Austen", "Agatha Christie"],
+        correta: 2
+      },
+      {
+        pergunta: "9. Qual personagem é um detetive que toca violino e mora na Baker Street?",
+        respostas: ["Hercule Poirot", "Sherlock Holmes", "Sam Spade", "Philip Marlowe"],
+        correta: 1
+      },
+      {
+        pergunta: "10. Em O Pequeno Príncipe, o que ele pede para desenhar?",
+        respostas: ["Um planeta", "Uma árvore", "Uma ovelha", "Uma raposa"],
+        correta: 2
+      }
+    ];
+
+    const quizForm = document.getElementById("quizForm");
+
+    perguntas.forEach((q, i) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `<h3>${q.pergunta}</h3>`;
+      q.respostas.forEach((resp, j) => {
+        div.innerHTML += `
+          <div class="answers">
+            <label><input type="radio" name="q${i}" value="${j}"> ${resp}</label>
+          </div>
+        `;
+      });
+      quizForm.appendChild(div);
+    });
+
+    function verificarRespostas() {
+      let pontuacao = 0;
+      perguntas.forEach((q, i) => {
+        const resposta = document.querySelector(`input[name="q${i}"]:checked`);
+        if (resposta && parseInt(resposta.value) === q.correta) {
+          pontuacao++;
+        }
+      });
+      document.getElementById("result").innerText = `Você acertou ${pontuacao} de ${perguntas.length} perguntas!`;
+    }
+  </script>
+
+</body>
+</html>
